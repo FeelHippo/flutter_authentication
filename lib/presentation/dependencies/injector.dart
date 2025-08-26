@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
+import 'package:flutter_authentication/bloc/login/cubit.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/app_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/bloc_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/data_module.dart';
@@ -63,6 +64,9 @@ class IOC {
     /// Blocs
     _registerSingleton<AuthBloc>(
       BlocModule.createAuthBloc,
+    );
+    _registerSingleton<LoginCubit>(
+      BlocModule.createLoginCubit,
     );
   }
 

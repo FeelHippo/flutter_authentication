@@ -13,8 +13,16 @@ class LoginRepository {
   final AuthProvider authProvider;
   final UserPreferences userPreferences;
 
-  Future<LoginModel> doLogin({required LoginRequest loginRequest}) async {
-    return loginProvider.doLogin(loginRequest: loginRequest);
+  Future<LoginModel> doLogin({
+    required String email,
+    required String password,
+  }) async {
+    return loginProvider.doLogin(
+      loginRequest: LoginRequest(
+        email: email,
+        password: password,
+      ),
+    );
   }
 
   Future<void> completeLogin({
