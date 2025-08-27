@@ -15,8 +15,8 @@ class DioFactory {
 
   static Dio create() {
     final BaseOptions options = BaseOptions(
-      baseUrl:
-      'http://ec2-16-170-122-157.eu-north-1.compute.amazonaws.com/', // wifi ip from command prompt with Git Bash -> ipconfig
+      baseUrl: 'https://db9f87b6da56.ngrok-free.app/',
+      // wifi ip from command prompt with Git Bash -> ipconfig
       receiveDataWhenStatusError: true,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),

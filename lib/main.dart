@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_authentication/presentation/common/scope_consumer_widget.dart';
@@ -9,16 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   await runZonedGuarded<Future<void>>(
-      () async {
-        WidgetsFlutterBinding.ensureInitialized();
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-        final IOC ioc = IOC.appScope();
+      final IOC ioc = IOC.appScope();
 
-        runApp(AuthenticationApp(scope: ioc));
+      runApp(AuthenticationApp(scope: ioc));
 
-        Bloc.observer = SimpleBlocDelegate();
-      },
-      (Object error, StackTrace stackTrace) => print('$error, $stackTrace'),
+      Bloc.observer = SimpleBlocDelegate();
+    },
+    (Object error, StackTrace stackTrace) => print('$error, $stackTrace'),
   );
 }
 
@@ -30,7 +29,7 @@ class SimpleBlocDelegate extends BlocObserver {
 }
 
 class AuthenticationApp extends StatelessWidget {
-  const AuthenticationApp({ super.key, required this.scope });
+  const AuthenticationApp({super.key, required this.scope});
 
   final IOC scope;
 
@@ -38,10 +37,7 @@ class AuthenticationApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopeProviderWidget(
       scope: scope,
-      child: MaterialApp(
-        home: ScopeConsumerWidget(),
-      ),
+      child: ScopeConsumerWidget(),
     );
   }
 }
-

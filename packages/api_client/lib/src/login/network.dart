@@ -1,6 +1,10 @@
 import 'package:apiClient/main.dart';
+import 'package:apiClient/src/dto/authentication.dart';
 import 'package:apiClient/src/requests/login.dart';
+import 'package:apiClient/src/requests/register.dart';
 import 'package:storage/main.dart';
+
+import '../dto/project.dart';
 
 class NetworkLoginProvider extends LoginProvider {
   NetworkLoginProvider({
@@ -10,9 +14,25 @@ class NetworkLoginProvider extends LoginProvider {
   final ApiClient apiClient;
 
   @override
-  Future<LoginModel> doLogin({required LoginRequest loginRequest}) async {
-    // Validate username and password
-    return LoginModel(token: 'Bearer ey...', userUid: 'abc123');
+  Future<String> doLogin({required LoginRequest loginRequest}) async {
+    final AuthenticationDto response = await apiClient.login(loginRequest);
+    return response.token;
+  }
+
+  @override
+  Future<String> doRegister({
+    required RegisterRequest registerRequest,
+  }) async {
+    final AuthenticationDto response = await apiClient.register(
+      registerRequest,
+    );
+    return response.token;
+  }
+
+  @override
+  Future<List<ProjectDto>> fetchProjects() async {
+    final ProjectListDto response = await apiClient.fetchProjects();
+    return response.projects;
   }
 
   @override

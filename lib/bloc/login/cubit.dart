@@ -6,18 +6,20 @@ class LoginState extends Equatable {
   const LoginState({
     required this.email,
     required this.password,
+    required this.token,
     this.isLoggedIn = false,
   });
 
-  LoginState.isAuthenticated(this.email, this.password) : isLoggedIn = true;
+  LoginState.isAuthenticated(this.email, this.password, this.token)
+    : isLoggedIn = true;
 
   final String? email;
   final String? password;
+  final String? token;
   final bool isLoggedIn;
 
   @override
-  // TODO: implement props
-  List<Object?> get props => <Object?>[email, password, isLoggedIn];
+  List<Object?> get props => <Object?>[email, password, token, isLoggedIn];
 }
 
 class LoginCubit extends Cubit<LoginState> {
@@ -26,6 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
         LoginState(
           email: null,
           password: null,
+          token: null,
         ),
       );
 
@@ -35,16 +38,17 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) async {
-    final LoginModel response = await loginRepository.doLogin(
+    final String token = await loginRepository.doLogin(
       email: email,
       password: password,
     );
 
-    if (response.isValid) {
+    if (token.isNotEmpty) {
       emit(
         LoginState.isAuthenticated(
           email,
           password,
+          token,
         ),
       );
     }

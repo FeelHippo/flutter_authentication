@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_authentication/bloc/login/cubit.dart';
+import 'package:flutter_authentication/bloc/registration/cubit.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/app_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/bloc_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/data_module.dart';
@@ -62,11 +63,14 @@ class IOC {
     _registerDependency<LoginRepository>(DomainModule.createLoginRepository);
 
     /// Blocs
-    _registerSingleton<AuthBloc>(
+    _registerDependency<AuthBloc>(
       BlocModule.createAuthBloc,
     );
-    _registerSingleton<LoginCubit>(
+    _registerDependency<LoginCubit>(
       BlocModule.createLoginCubit,
+    );
+    _registerDependency<RegistrationCubit>(
+      BlocModule.createRegistrationCubit,
     );
   }
 
