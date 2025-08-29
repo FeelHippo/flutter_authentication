@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_authentication/bloc/login/cubit.dart';
 import 'package:flutter_authentication/bloc/registration/cubit.dart';
+import 'package:flutter_authentication/bloc/tracker/cubit.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/app_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/bloc_module.dart';
 import 'package:flutter_authentication/presentation/dependencies/modules/data_module.dart';
@@ -52,7 +53,9 @@ class IOC {
 
     /// Data Providers
     _registerDependency<AuthProvider>(DataModule.createAuthProvider);
-    _registerDependency<LoginProvider>(DataModule.createLoginProvider);
+    _registerDependency<AuthenticationProvider>(
+      DataModule.createAuthenticationProvider,
+    );
 
     /// App UI
     _registerDependency<Connectivity>(AppModule.createConnectivity);
@@ -60,7 +63,9 @@ class IOC {
     /// Repositories
     _registerDependency<UserRepository>(DomainModule.createUserRepository);
     _registerDependency<AuthRepository>(DomainModule.createAuthRepository);
-    _registerDependency<LoginRepository>(DomainModule.createLoginRepository);
+    _registerDependency<AuthenticationRepository>(
+      DomainModule.createAuthenticationRepository,
+    );
 
     /// Blocs
     _registerDependency<AuthBloc>(
@@ -71,6 +76,9 @@ class IOC {
     );
     _registerDependency<RegistrationCubit>(
       BlocModule.createRegistrationCubit,
+    );
+    _registerDependency<TrackerCubit>(
+      BlocModule.createTrackerCubit,
     );
   }
 

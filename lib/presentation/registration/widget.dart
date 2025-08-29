@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_authentication/bloc/registration/cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -40,7 +41,11 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
     return BlocListener<RegistrationCubit, RegistrationState>(
       listener: (BuildContext context, RegistrationState state) {
         if (state.isLoggedIn) {
-          context.go('/home');
+          BlocProvider.of<AuthBloc>(context).add(
+            CompleteAuthorization(
+              token: state.token!,
+            ),
+          );
         }
       },
       child: AppScaffold(
@@ -275,7 +280,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              context.go('/');
+                              context.pop();
                             },
                             child: Text(
                               'I Do Have an Account',

@@ -41,7 +41,7 @@ class StoreAuthProvider extends AuthProvider {
       _subject!.add(AuthModel.empty());
     } else {
       await _storage.write(key: _tokenKey, value: model.token);
-      _subject!.add(AuthModel(token: model.token));
+      _subject!.add(model);
     }
     return;
   }

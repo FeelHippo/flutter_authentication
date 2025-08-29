@@ -1,18 +1,14 @@
 import 'package:apiClient/main.dart';
-import 'package:apiClient/src/dto/project.dart';
-import 'package:apiClient/src/requests/login.dart';
 import 'package:storage/main.dart';
 
-import '../requests/register.dart';
-
-class LoginRepository {
-  LoginRepository(
-    this.loginProvider,
+class AuthenticationRepository {
+  AuthenticationRepository(
+    this.authenticationProvider,
     this.authProvider,
     this.userPreferences,
   );
 
-  final LoginProvider loginProvider;
+  final AuthenticationProvider authenticationProvider;
   final AuthProvider authProvider;
   final UserPreferences userPreferences;
 
@@ -20,7 +16,7 @@ class LoginRepository {
     required String email,
     required String password,
   }) async {
-    return loginProvider.doLogin(
+    return authenticationProvider.doLogin(
       loginRequest: LoginRequest(
         email: email,
         password: password,
@@ -35,7 +31,7 @@ class LoginRepository {
     required String firstName,
     required String lastName,
   }) async {
-    return loginProvider.doRegister(
+    return authenticationProvider.doRegister(
       registerRequest: RegisterRequest(
         email: email,
         password: password,
@@ -48,10 +44,10 @@ class LoginRepository {
   }
 
   Future<List<ProjectDto>> fetchProjects() async {
-    return loginProvider.fetchProjects();
+    return authenticationProvider.fetchProjects();
   }
 
-  Future<void> completeLogin({
+  Future<void> completeAuthentication({
     required String token,
     required String userUid,
   }) async {
@@ -60,6 +56,6 @@ class LoginRepository {
   }
 
   Future<UserModel> getCurrentUser() async {
-    return loginProvider.getCurrentUser();
+    return authenticationProvider.getCurrentUser();
   }
 }

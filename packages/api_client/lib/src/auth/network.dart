@@ -1,13 +1,9 @@
 import 'package:apiClient/main.dart';
 import 'package:apiClient/src/dto/authentication.dart';
-import 'package:apiClient/src/requests/login.dart';
-import 'package:apiClient/src/requests/register.dart';
 import 'package:storage/main.dart';
 
-import '../dto/project.dart';
-
-class NetworkLoginProvider extends LoginProvider {
-  NetworkLoginProvider({
+class NetworkAuthProvider extends AuthenticationProvider {
+  NetworkAuthProvider({
     required this.apiClient,
   });
 

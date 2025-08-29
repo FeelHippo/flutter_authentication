@@ -26,8 +26,18 @@ class _HomeWidgetState extends State<HomeWidget> {
         width: MediaQuery.of(context).size.width,
         child: BlocBuilder<TrackerCubit, TrackerState>(
           builder: (BuildContext context, TrackerState state) {
-            return Column(
-              children: <Widget>[],
+            return ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: state.projects!.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (state.projects != null) {
+                  return Container();
+                }
+                return Container(
+                  height: 64,
+                  child: Center(child: Text(state.projects![index].name)),
+                );
+              },
             );
           },
         ),

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'authentication.g.dart';
+part 'project.g.dart';
 
 @JsonSerializable()
 class ProjectListDto {

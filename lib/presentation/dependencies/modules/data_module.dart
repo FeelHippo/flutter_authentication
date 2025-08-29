@@ -15,8 +15,9 @@ class DataModule {
         injector.get<FlutterSecureStorage>(),
       );
 
-  static LoginProvider createLoginProvider(Injector injector) =>
-      NetworkLoginProvider(
-        apiClient: injector.get<ApiClient>(),
-      );
+  static AuthenticationProvider createAuthenticationProvider(
+    Injector injector,
+  ) => NetworkAuthProvider(
+    apiClient: injector.get<ApiClient>(),
+  );
 }

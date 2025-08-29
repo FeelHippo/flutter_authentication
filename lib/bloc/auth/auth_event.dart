@@ -20,8 +20,8 @@ class SyncUserStateAuthEvent extends AuthEvent {
   List<Object> get props => <Object>[auth];
 }
 
-class CompleteOnboarding extends AuthEvent {
-  const CompleteOnboarding({
+class CompleteAuthorization extends AuthEvent {
+  const CompleteAuthorization({
     required this.token,
   });
 
@@ -34,17 +34,4 @@ class CompleteOnboarding extends AuthEvent {
 class SignOutAuthEvent extends AuthEvent {
   @override
   List<Object> get props => const <Object>[];
-}
-
-class FetchLoginData extends AuthEvent {
-  const FetchLoginData({
-    required this.token,
-    required this.userUid,
-  });
-
-  final String token;
-  final String userUid;
-
-  @override
-  List<Object> get props => <Object>[token];
 }

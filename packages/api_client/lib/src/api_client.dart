@@ -12,7 +12,7 @@ part 'api_client.g.dart';
 abstract class ApiClient {
   factory ApiClient(Dio dio) = _ApiClient;
 
-  @POST('login/')
+  @POST('auth/')
   Future<AuthenticationDto> login(
     @Body() LoginRequest request,
   );

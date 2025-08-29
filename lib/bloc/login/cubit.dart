@@ -23,7 +23,7 @@ class LoginState extends Equatable {
 }
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this.loginRepository)
+  LoginCubit(this.authenticationRepository)
     : super(
         LoginState(
           email: null,
@@ -32,13 +32,13 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
 
-  final LoginRepository loginRepository;
+  final AuthenticationRepository authenticationRepository;
 
   void authenticate({
     required String email,
     required String password,
   }) async {
-    final String token = await loginRepository.doLogin(
+    final String token = await authenticationRepository.doLogin(
       email: email,
       password: password,
     );

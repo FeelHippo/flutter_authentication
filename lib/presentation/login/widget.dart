@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,7 +32,11 @@ class _LoginWidgetState extends State<LoginWidget> {
     return BlocListener<LoginCubit, LoginState>(
       listener: (BuildContext context, LoginState state) {
         if (state.isLoggedIn) {
-          context.go('/home');
+          BlocProvider.of<AuthBloc>(context).add(
+            CompleteAuthorization(
+              token: state.token!,
+            ),
+          );
         }
       },
       child: AppScaffold(

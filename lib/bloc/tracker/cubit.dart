@@ -1,5 +1,4 @@
 import 'package:apiClient/main.dart';
-import 'package:apiClient/src/dto/project.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,17 +23,18 @@ class TrackerState extends Equatable {
 }
 
 class TrackerCubit extends Cubit<TrackerState> {
-  TrackerCubit(this.loginRepository)
+  TrackerCubit(this.authenticationRepository)
     : super(
         TrackerState(
           projects: null,
         ),
       );
 
-  final LoginRepository loginRepository;
+  AuthenticationRepository authenticationRepository;
 
   void fetchProjects() async {
-    final List<ProjectDto> projects = await loginRepository.fetchProjects();
+    final List<ProjectDto> projects = await authenticationRepository
+        .fetchProjects();
 
     if (projects.isNotEmpty) {
       emit(

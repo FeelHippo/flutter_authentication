@@ -43,7 +43,7 @@ class RegistrationState extends Equatable {
 }
 
 class RegistrationCubit extends Cubit<RegistrationState> {
-  RegistrationCubit(this.loginRepository)
+  RegistrationCubit(this.authenticationRepository)
     : super(
         RegistrationState(
           email: null,
@@ -55,7 +55,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
         ),
       );
 
-  final LoginRepository loginRepository;
+  final AuthenticationRepository authenticationRepository;
 
   void register({
     required String email,
@@ -64,7 +64,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     required String firstName,
     required String lastName,
   }) async {
-    final String token = await loginRepository.doRegister(
+    final String token = await authenticationRepository.doRegister(
       email: email,
       password: password,
       username: username,
