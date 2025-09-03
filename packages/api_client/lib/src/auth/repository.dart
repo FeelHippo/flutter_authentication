@@ -12,7 +12,7 @@ class AuthenticationRepository {
   final AuthProvider authProvider;
   final UserPreferences userPreferences;
 
-  Future<String> doLogin({
+  Future<AuthenticationModel> doLogin({
     required String email,
     required String password,
   }) async {
@@ -24,7 +24,7 @@ class AuthenticationRepository {
     );
   }
 
-  Future<String> doRegister({
+  Future<AuthenticationModel> doRegister({
     required String email,
     required String password,
     required String username,
@@ -38,24 +38,11 @@ class AuthenticationRepository {
         username: username,
         firstName: firstName,
         lastName: lastName,
-        isAdmin: false,
       ),
     );
   }
 
-  Future<List<ProjectDto>> fetchProjects() async {
-    return authenticationProvider.fetchProjects();
-  }
-
-  Future<void> completeAuthentication({
-    required String token,
-    required String userUid,
-  }) async {
-    await userPreferences.putCurrentUserId(userUid);
-    await authProvider.put(AuthModel(token: token));
-  }
-
-  Future<UserModel> getCurrentUser() async {
-    return authenticationProvider.getCurrentUser();
+  Future<BaseAuthModel> getUserById({required String id}) async {
+    return authenticationProvider.getUserById(id: id);
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_authentication/bloc/login/cubit.dart';
 import 'package:flutter_authentication/bloc/registration/cubit.dart';
-import 'package:flutter_authentication/bloc/tracker/cubit.dart';
 import 'package:flutter_authentication/presentation/auth/auth_widget.dart';
 import 'package:flutter_authentication/presentation/dependencies/injector.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,11 +30,6 @@ class ScopeConsumerWidget extends StatelessWidget {
             BlocProvider<RegistrationCubit>(
               create: (BuildContext context) {
                 return ioc.getDependency<RegistrationCubit>();
-              },
-            ),
-            BlocProvider<TrackerCubit>(
-              create: (BuildContext context) {
-                return ioc.getDependency<TrackerCubit>();
               },
             ),
           ],

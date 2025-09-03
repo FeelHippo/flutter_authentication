@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         if (state.isLoggedIn) {
           BlocProvider.of<AuthBloc>(context).add(
             CompleteAuthorization(
-              token: state.token!,
+              authenticationModel: state.authenticationModel!,
             ),
           );
         }

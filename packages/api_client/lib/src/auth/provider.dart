@@ -1,17 +1,15 @@
 import 'package:apiClient/main.dart';
-import 'package:storage/main.dart';
 
 abstract class AuthenticationProvider {
-  Future<String> doLogin({
+  Future<AuthenticationModel> doLogin({
     required LoginRequest loginRequest,
   });
 
-  Future<String> doRegister({
+  Future<AuthenticationModel> doRegister({
     required RegisterRequest registerRequest,
   });
 
-  // TODO: move to projects module
-  Future<List<ProjectDto>> fetchProjects();
-
-  Future<UserModel> getCurrentUser();
+  Future<BaseAuthModel> getUserById({
+    required String id,
+  });
 }

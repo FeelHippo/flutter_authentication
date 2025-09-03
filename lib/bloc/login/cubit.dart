@@ -4,31 +4,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginState extends Equatable {
   const LoginState({
-    required this.email,
-    required this.password,
-    required this.token,
+    required this.authenticationModel,
     this.isLoggedIn = false,
   });
 
-  LoginState.isAuthenticated(this.email, this.password, this.token)
-    : isLoggedIn = true;
+  LoginState.isAuthenticated(
+    this.authenticationModel,
+  ) : isLoggedIn = true;
 
-  final String? email;
-  final String? password;
-  final String? token;
+  final AuthenticationModel? authenticationModel;
   final bool isLoggedIn;
 
   @override
-  List<Object?> get props => <Object?>[email, password, token, isLoggedIn];
+  List<Object?> get props => <Object?>[
+    authenticationModel,
+    isLoggedIn,
+  ];
 }
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.authenticationRepository)
     : super(
         LoginState(
-          email: null,
-          password: null,
-          token: null,
+          authenticationModel: null,
         ),
       );
 
@@ -38,18 +36,15 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) async {
-    final String token = await authenticationRepository.doLogin(
-      email: email,
-      password: password,
-    );
+    final AuthenticationModel authenticationModel =
+        await authenticationRepository.doLogin(
+          email: email,
+          password: password,
+        );
 
-    if (token.isNotEmpty) {
+    if (authenticationModel.token.isNotEmpty) {
       emit(
-        LoginState.isAuthenticated(
-          email,
-          password,
-          token,
-        ),
+        LoginState.isAuthenticated(authenticationModel),
       );
     }
   }

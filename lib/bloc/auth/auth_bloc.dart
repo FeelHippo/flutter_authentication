@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:apiClient/main.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:storage/main.dart';
@@ -10,6 +11,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
     this._authRepository,
+    this._authenticationRepository,
   ) : super(
         const AuthState(
           loading: Loading.initializing,
@@ -22,7 +24,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutAuthEvent>(_handleSignOutAuth);
   }
 
+  // device storage
   final AuthRepository _authRepository;
+
+  // network
+  final AuthenticationRepository _authenticationRepository;
 
   StreamSubscription<AuthModel>? _subscription;
 
@@ -46,9 +52,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       try {
         emit(state.copyWith(loading: Loading.loading));
+        final BaseAuthModel userData = await _authenticationRepository
+            .getUserById(
+              id: event.auth.userUid!,
+            );
         emit(
           await _processAuthorisation(
-            token: event.auth.token,
+            authenticationModel: AuthenticationModel(
+              token: event.auth.token!,
+              id: userData.id,
+              email: userData.email,
+              username: userData.username,
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+            ),
           ),
         );
       } catch (e, stacktrace) {
@@ -64,7 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(
       await _processAuthorisation(
-        token: event.token,
+        authenticationModel: event.authenticationModel,
       ),
     );
   }
@@ -77,9 +94,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<AuthState> _processAuthorisation({
-    required String token,
+    required AuthenticationModel authenticationModel,
   }) async {
-    final UserModel? user = await _authRepository.authorize(token);
+    final UserModel? user = await _authRepository.authorize(
+      authenticationModel: authenticationModel,
+    );
     if (user != null) {
       /// User exists and is authenticated
       return state.copyWith(

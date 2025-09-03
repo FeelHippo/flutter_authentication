@@ -13,7 +13,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       username: json['username'] as String,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      isAdmin: json['is_admin'] as bool,
+      isAdmin: json['is_admin'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>

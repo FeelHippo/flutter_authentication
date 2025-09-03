@@ -1,4 +1,6 @@
+import 'package:apiClient/main.dart';
 import 'package:dio/dio.dart';
+import 'package:storage/main.dart';
 
 class DioFactory {
   static const Duration _defaultMaxAge = Duration(hours: 1);
@@ -13,9 +15,11 @@ class DioFactory {
     'DIO_CACHE_KEY_MAX_STALE': _defaultMaxStale,
   };
 
-  static Dio create() {
+  static Dio create({
+    required AuthProvider authProvider,
+  }) {
     final BaseOptions options = BaseOptions(
-      baseUrl: 'https://db9f87b6da56.ngrok-free.app/',
+      baseUrl: 'https://e24a4994ed7f.ngrok-free.app/',
       // wifi ip from command prompt with Git Bash -> ipconfig
       receiveDataWhenStatusError: true,
       connectTimeout: const Duration(seconds: 30),
@@ -23,6 +27,14 @@ class DioFactory {
     );
 
     final Dio dio = Dio()..options = options;
+
+    dio.interceptors.addAll(
+      <Interceptor>[
+        AuthenticationInterceptor(
+          authProvider: authProvider,
+        ),
+      ],
+    );
 
     return dio;
   }

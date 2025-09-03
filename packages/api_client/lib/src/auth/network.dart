@@ -1,6 +1,6 @@
 import 'package:apiClient/main.dart';
 import 'package:apiClient/src/dto/authentication.dart';
-import 'package:storage/main.dart';
+import 'package:apiClient/src/dto/user.dart';
 
 class NetworkAuthProvider extends AuthenticationProvider {
   NetworkAuthProvider({
@@ -10,30 +10,47 @@ class NetworkAuthProvider extends AuthenticationProvider {
   final ApiClient apiClient;
 
   @override
-  Future<String> doLogin({required LoginRequest loginRequest}) async {
-    final AuthenticationDto response = await apiClient.login(loginRequest);
-    return response.token;
+  Future<AuthenticationModel> doLogin({
+    required LoginRequest loginRequest,
+  }) async {
+    final AuthenticationDto dto = await apiClient.login(loginRequest);
+    return AuthenticationModel(
+      token: dto.token,
+      id: dto.id,
+      email: dto.email,
+      username: dto.username,
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+    );
   }
 
   @override
-  Future<String> doRegister({
+  Future<AuthenticationModel> doRegister({
     required RegisterRequest registerRequest,
   }) async {
-    final AuthenticationDto response = await apiClient.register(
+    final AuthenticationDto dto = await apiClient.register(
       registerRequest,
     );
-    return response.token;
+    return AuthenticationModel(
+      token: dto.token,
+      id: dto.id,
+      email: dto.email,
+      username: dto.username,
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+    );
   }
 
   @override
-  Future<List<ProjectDto>> fetchProjects() async {
-    final ProjectListDto response = await apiClient.fetchProjects();
-    return response.projects;
-  }
-
-  @override
-  Future<UserModel> getCurrentUser() async {
-    // TODO(Filippo): TBD
-    return UserModel('', '');
+  Future<BaseAuthModel> getUserById({required String id}) async {
+    final UserDto dto = await apiClient.getUserById(id);
+    final UserDataDto userData = dto.user;
+    return BaseAuthModel(
+      id: userData.id,
+      email: userData.email,
+      username: userData.username,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+    );
   }
 }

@@ -22,13 +22,13 @@ class SyncUserStateAuthEvent extends AuthEvent {
 
 class CompleteAuthorization extends AuthEvent {
   const CompleteAuthorization({
-    required this.token,
+    required this.authenticationModel,
   });
 
-  final String token;
+  final AuthenticationModel authenticationModel;
 
   @override
-  List<Object> get props => <Object>[token];
+  List<Object> get props => <Object>[authenticationModel];
 }
 
 class SignOutAuthEvent extends AuthEvent {

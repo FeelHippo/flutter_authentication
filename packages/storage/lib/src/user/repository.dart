@@ -17,15 +17,6 @@ class UserRepository {
     return !authModel.isEmpty;
   }
 
-  Future<UserModel?> getCurrentUser() async {
-    if (!(await isThereCurrentUser())) {
-      await clearUserData();
-      return null;
-    }
-    final UserModel? user = await _authenticationRepository.getCurrentUser();
-    return user;
-  }
-
   Future<void> logout() async {
     await clearUserData();
     return;

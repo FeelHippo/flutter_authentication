@@ -2,7 +2,6 @@ import 'package:apiClient/main.dart';
 import 'package:flutter_authentication/bloc/auth/auth_bloc.dart';
 import 'package:flutter_authentication/bloc/login/cubit.dart';
 import 'package:flutter_authentication/bloc/registration/cubit.dart';
-import 'package:flutter_authentication/bloc/tracker/cubit.dart';
 import 'package:injector/injector.dart';
 import 'package:storage/main.dart';
 
@@ -19,8 +18,4 @@ class BlocModule {
       RegistrationCubit(
         injector.get<AuthenticationRepository>(),
       );
-
-  static TrackerCubit createTrackerCubit(Injector injector) => TrackerCubit(
-    injector.get<AuthenticationRepository>(),
-  );
 }

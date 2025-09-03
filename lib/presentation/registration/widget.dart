@@ -43,7 +43,7 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
         if (state.isLoggedIn) {
           BlocProvider.of<AuthBloc>(context).add(
             CompleteAuthorization(
-              token: state.token!,
+              authenticationModel: state.authenticationModel!,
             ),
           );
         }

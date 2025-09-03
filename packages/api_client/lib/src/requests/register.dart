@@ -10,7 +10,7 @@ class RegisterRequest {
     required this.username,
     required this.firstName,
     required this.lastName,
-    required this.isAdmin,
+    this.isAdmin = false,
   });
 
   final String email;
@@ -18,7 +18,8 @@ class RegisterRequest {
   final String username;
   final String firstName;
   final String lastName;
-  final bool isAdmin;
+  @JsonKey(defaultValue: false)
+  final bool? isAdmin;
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
       _$RegisterRequestFromJson(json);

@@ -1,3 +1,4 @@
+import 'package:apiClient/main.dart';
 import 'package:storage/main.dart';
 
 class AuthRepository {
@@ -13,13 +14,22 @@ class AuthRepository {
     yield* authProvider.get();
   }
 
-  Future<UserModel?> authorize(String token) async {
-    UserModel? user = await userRepository.getCurrentUser();
-    if (user != null && user.isEmpty) {
-      // store auth token on device
-      await authProvider.put(AuthModel(token: token));
-      user = await userRepository.getCurrentUser();
-    }
-    return user;
+  Future<UserModel?> authorize({
+    required AuthenticationModel authenticationModel,
+  }) async {
+    // store auth token on device
+    await authProvider.put(
+      AuthModel(
+        token: authenticationModel.token,
+        userUid: authenticationModel.id,
+      ),
+    );
+    return UserModel(
+      id: authenticationModel.id,
+      email: authenticationModel.email,
+      username: authenticationModel.username,
+      firstName: authenticationModel.firstName,
+      lastName: authenticationModel.lastName,
+    );
   }
 }
