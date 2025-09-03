@@ -1,6 +1,7 @@
 import 'package:apiClient/main.dart';
 import 'package:dio/dio.dart';
-import 'package:storage/main.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioFactory {
   static const Duration _defaultMaxAge = Duration(hours: 1);
@@ -16,7 +17,7 @@ class DioFactory {
   };
 
   static Dio create({
-    required AuthProvider authProvider,
+    required FlutterSecureStorage secureStorage,
   }) {
     final BaseOptions options = BaseOptions(
       baseUrl: 'https://e24a4994ed7f.ngrok-free.app/',
@@ -31,7 +32,11 @@ class DioFactory {
     dio.interceptors.addAll(
       <Interceptor>[
         AuthenticationInterceptor(
-          authProvider: authProvider,
+          secureStorage: secureStorage,
+        ),
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
         ),
       ],
     );

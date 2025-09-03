@@ -14,7 +14,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._authenticationRepository,
   ) : super(
         const AuthState(
-          loading: Loading.initializing,
           auth: InitialAuthUiModel(),
         ),
       ) {
@@ -51,26 +50,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await emitStateUnauthorized(emit);
     } else {
       try {
-        emit(state.copyWith(loading: Loading.loading));
         final BaseAuthModel userData = await _authenticationRepository
             .getUserById(
               id: event.auth.userUid!,
             );
         emit(
-          await _processAuthorisation(
-            authenticationModel: AuthenticationModel(
-              token: event.auth.token!,
-              id: userData.id,
-              email: userData.email,
-              username: userData.username,
-              firstName: userData.firstName,
-              lastName: userData.lastName,
+          state.copyWith(
+            auth: AuthorizedAuthUiModel(
+              UserModel(
+                id: userData.id,
+                email: userData.email,
+                username: userData.username,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+              ),
             ),
           ),
         );
       } catch (e, stacktrace) {
         print('Error occurred while trying to authorize $e $stacktrace');
-        emit(state.copyWith(loading: Loading.none, error: e));
+        emit(state.copyWith(error: e));
       }
     }
   }
@@ -102,14 +101,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (user != null) {
       /// User exists and is authenticated
       return state.copyWith(
-        loading: Loading.none,
         auth: AuthorizedAuthUiModel(
           user,
         ),
       );
     } else {
       return state.copyWith(
-        loading: Loading.none,
         auth: UnauthorizedAuthUiModel(),
       );
     }
@@ -118,7 +115,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> emitStateUnauthorized(Emitter<AuthState> emit) async {
     emit(
       state.copyWith(
-        loading: Loading.none,
         auth: UnauthorizedAuthUiModel(),
       ),
     );

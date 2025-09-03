@@ -1,14 +1,11 @@
-import 'package:apiClient/main.dart';
 import 'package:storage/main.dart';
 
 class UserRepository {
   UserRepository(
-    this._authenticationRepository,
     this._userPreferences,
     this._authProvider,
   );
 
-  final AuthenticationRepository _authenticationRepository;
   final UserPreferences _userPreferences;
   final AuthProvider _authProvider;
 

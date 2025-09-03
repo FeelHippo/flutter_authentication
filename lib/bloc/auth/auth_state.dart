@@ -2,32 +2,26 @@ part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
   const AuthState({
-    this.loading = Loading.none,
     this.error,
     this.auth = const InitialAuthUiModel(),
   });
 
-  final Loading loading;
   final dynamic error;
   final AuthUiModel auth;
 
   AuthState copyWith({
-    Loading? loading,
     dynamic error,
     AuthUiModel? auth,
   }) {
     return AuthState(
-      loading: loading ?? this.loading,
       error: error ?? this.error,
       auth: auth ?? this.auth,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[loading, error, auth];
+  List<Object?> get props => <Object?>[error, auth];
 }
-
-enum Loading { initializing, loading, none }
 
 abstract class AuthUiModel extends Equatable {
   const AuthUiModel();

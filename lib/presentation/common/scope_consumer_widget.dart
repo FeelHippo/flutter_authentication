@@ -19,7 +19,7 @@ class ScopeConsumerWidget extends StatelessWidget {
           providers: <SingleChildWidget>[
             BlocProvider<AuthBloc>(
               create: (BuildContext context) {
-                return ioc.getDependency<AuthBloc>()..add(FetchAuthEvent());
+                return ioc.getDependency<AuthBloc>();
               },
             ),
             BlocProvider<LoginCubit>(

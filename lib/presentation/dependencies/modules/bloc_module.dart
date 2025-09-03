@@ -8,6 +8,7 @@ import 'package:storage/main.dart';
 class BlocModule {
   static AuthBloc createAuthBloc(Injector injector) => AuthBloc(
     injector.get<AuthRepository>(),
+    injector.get<AuthenticationRepository>(),
   );
 
   static LoginCubit createLoginCubit(Injector injector) => LoginCubit(

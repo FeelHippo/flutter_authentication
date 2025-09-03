@@ -1,12 +1,12 @@
 import 'package:apiClient/main.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injector/injector.dart';
-import 'package:storage/main.dart';
 
 class NetworkModule {
   static Dio createDio(Injector injector) {
     return DioFactory.create(
-      authProvider: injector.get<AuthProvider>(),
+      secureStorage: injector.get<FlutterSecureStorage>(),
     );
   }
 

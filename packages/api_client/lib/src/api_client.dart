@@ -11,13 +11,17 @@ part 'api_client.g.dart';
 abstract class ApiClient {
   factory ApiClient(Dio dio) = _ApiClient;
 
-  @Extra({AuthenticationInterceptor.nonAuth: true})
-  @POST('auth/')
+  @Extra(<String, Object>{
+    AuthenticationInterceptor.nonAuth: true,
+  })
+  @POST('login/')
   Future<AuthenticationDto> login(
     @Body() LoginRequest request,
   );
 
-  @Extra({AuthenticationInterceptor.nonAuth: true})
+  @Extra(<String, Object>{
+    AuthenticationInterceptor.nonAuth: true,
+  })
   @POST('register/')
   Future<AuthenticationDto> register(
     @Body() RegisterRequest request,

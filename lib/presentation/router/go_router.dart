@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_authentication/presentation/login/widget.dart';
-import 'package:flutter_authentication/presentation/registration/widget.dart';
+import 'package:flutter_authentication/presentation/common/app_scaffold.dart';
+import 'package:flutter_authentication/presentation/common/circular_progress_bar.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter.routingConfig(routingConfig: routingConfig);
@@ -11,15 +11,11 @@ final ValueNotifier<RoutingConfig> routingConfig = ValueNotifier<RoutingConfig>(
     routes: <RouteBase>[
       GoRoute(
         path: '/',
-        builder: (_, __) => LoginWidget(),
-        routes: <RouteBase>[
-          GoRoute(
-            path: 'register',
-            builder: (BuildContext context, GoRouterState state) {
-              return const RegistrationWidget();
-            },
+        builder: (_, __) => AppScaffold(
+          body: Center(
+            child: CircularProgressBar(),
           ),
-        ],
+        ),
       ),
     ],
   ),

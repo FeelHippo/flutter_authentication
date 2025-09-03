@@ -42,7 +42,7 @@ class IOC {
   void _initDependencies() {
     /// Api Clients
     _registerSingleton<Dio>(NetworkModule.createDio);
-    _registerDependency<ApiClient>(NetworkModule.createApiClient);
+    _registerSingleton<ApiClient>(NetworkModule.createApiClient);
 
     /// Storage
     _registerSingleton<FlutterSecureStorage>(
@@ -51,29 +51,29 @@ class IOC {
     _registerSingleton<UserPreferences>(DataModule.createUserPreferences);
 
     /// Data Providers
-    _registerDependency<AuthProvider>(DataModule.createAuthProvider);
-    _registerDependency<AuthenticationProvider>(
+    _registerSingleton<AuthProvider>(DataModule.createAuthProvider);
+    _registerSingleton<AuthenticationProvider>(
       DataModule.createAuthenticationProvider,
     );
 
     /// App UI
-    _registerDependency<Connectivity>(AppModule.createConnectivity);
+    _registerSingleton<Connectivity>(AppModule.createConnectivity);
 
     /// Repositories
-    _registerDependency<UserRepository>(DomainModule.createUserRepository);
-    _registerDependency<AuthRepository>(DomainModule.createAuthRepository);
-    _registerDependency<AuthenticationRepository>(
+    _registerSingleton<UserRepository>(DomainModule.createUserRepository);
+    _registerSingleton<AuthRepository>(DomainModule.createAuthRepository);
+    _registerSingleton<AuthenticationRepository>(
       DomainModule.createAuthenticationRepository,
     );
 
     /// Blocs
-    _registerDependency<AuthBloc>(
+    _registerSingleton<AuthBloc>(
       BlocModule.createAuthBloc,
     );
-    _registerDependency<LoginCubit>(
+    _registerSingleton<LoginCubit>(
       BlocModule.createLoginCubit,
     );
-    _registerDependency<RegistrationCubit>(
+    _registerSingleton<RegistrationCubit>(
       BlocModule.createRegistrationCubit,
     );
   }

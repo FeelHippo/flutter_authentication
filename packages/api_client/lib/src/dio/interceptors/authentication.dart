@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:storage/main.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthenticationInterceptor extends Interceptor {
+  static const String _tokenKey = 'token';
   static const String nonAuth = 'no_auth';
   static const Map<String, Object> isNonAuthenticated = <String, Object>{
     nonAuth: true,
   };
 
   AuthenticationInterceptor({
-    required this.authProvider,
+    required this.secureStorage,
   });
 
-  final AuthProvider authProvider;
+  final FlutterSecureStorage secureStorage;
 
   @override
   Future<void> onRequest(
@@ -23,9 +24,9 @@ class AuthenticationInterceptor extends Interceptor {
       return;
     }
 
-    final AuthModel authModel = await authProvider.get().last;
+    final String? token = await secureStorage.read(key: _tokenKey);
 
-    if (authModel.isEmpty) {
+    if (token == null || token.isEmpty) {
       handler.resolve(
         Response<dynamic>(
           requestOptions: options,
@@ -34,7 +35,8 @@ class AuthenticationInterceptor extends Interceptor {
       );
     }
 
-    options.headers['Authorization'] = 'Bearer ${authModel.token}';
+    // TODO: align this with backend, no authentication in place right now
+    // options.headers['Authorization'] = 'Bearer $token';
     options.contentType = 'application/json';
     handler.next(options);
   }

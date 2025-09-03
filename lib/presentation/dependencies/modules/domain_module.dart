@@ -5,7 +5,6 @@ import 'package:storage/main.dart';
 class DomainModule {
   static UserRepository createUserRepository(Injector injector) =>
       UserRepository(
-        injector.get<AuthenticationRepository>(),
         injector.get<UserPreferences>(),
         injector.get<AuthProvider>(),
       );
