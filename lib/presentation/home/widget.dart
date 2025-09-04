@@ -4,6 +4,8 @@ import 'package:flutter_authentication/presentation/common/app_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeWidget extends StatelessWidget {
+  const HomeWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(

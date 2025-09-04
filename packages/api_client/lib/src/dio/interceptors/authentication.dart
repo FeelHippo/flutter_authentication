@@ -35,7 +35,7 @@ class AuthenticationInterceptor extends Interceptor {
       );
     }
 
-    // TODO: align this with backend, no authentication in place right now
+    // TODO: align this with backend, no token verification middleware in place right now
     // options.headers['Authorization'] = 'Bearer $token';
     options.contentType = 'application/json';
     handler.next(options);
